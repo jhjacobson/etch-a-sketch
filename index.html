@@ -1,0 +1,74 @@
+<!-- 
+TO DO:
+    Allow user to choose between black, random color, or their own using color palette
+    Allow user to select size of grid
+    Create a max size for the div (e.g. 5x5 is same size as 10x10)
+    Add the reset button
+
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="main.css">
+    <title>Etch-a-Sketch</title>
+</head>
+<body>
+    <div id="box">
+
+
+    </div>
+
+</body>
+
+<script>
+    const gridsize = 10;
+    const BACKGROUNDCOLOR = 'red';
+    const random = 1;
+    createGrid(gridsize);
+
+
+    function createGrid(gridsize) {
+        const etchBox = document.querySelector('#box');
+        for(let i = 0; i < gridsize; i++) {
+            const column = document.createElement('div');
+            for(let j = 0; j < gridsize; j++) {
+                const etchBox = document.createElement('div');
+                etchBox.classList.add('etchBox');
+                column.appendChild(etchBox);
+            }
+            etchBox.appendChild(column);
+        }
+    }
+
+    function changeColor(e) {
+        let color;
+        if(random == 1){
+            color = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + 
+                    (Math.floor(Math.random() * 256)) + ',' + 
+                    (Math.floor(Math.random() * 256)) + ')';
+        }
+
+        else {
+            color = BACKGROUNDCOLOR;
+        }
+
+        this.style.backgroundColor = color;
+    }
+
+    function reset () {
+        const etchBoxes = document.querySelectorAll('.etchBox');
+        // etchBoxes.forEach(etchBox => etchBox.classList.remove('hovered'));
+        etchBoxes.forEach(etchBox => etchBox.style.backgroundColor = 'white');
+    }
+
+    const etchBoxes = document.querySelectorAll('.etchBox');
+    etchBoxes.forEach(etchBox => etchBox.addEventListener("mouseover",changeColor));
+
+
+
+</script>
+
+
+</html>
