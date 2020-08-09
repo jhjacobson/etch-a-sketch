@@ -1,19 +1,56 @@
+#header {
+    width: 48vw;
+    text-align: center;
+}
+
+#content {
+    margin: 5vw;
+    z-index: 0;
+    background-image: linear-gradient(to right,rgb(229,57,53),rgb(194,38,47) 15%,
+            rgb(194,38,47) 85%,rgb(229,57,53) 100%);
+    width: 53vw;
+    max-width: 38vw;
+    height: 53vw;
+    max-height: 38vw;
+    border-style: solid;
+    border-width: 0.1px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2vw;
+    text-align: center;
+}
+
+#footer {
+    width: 48vw;
+    text-align: center;
+}
+
 #box {
     display: flex;
-    flex-direction: row;
-    max-width: 10px;
-    max-height: 10px;
+    flex-direction: column;
+    justify-content: stretch;
+    width: 45vw;
+    max-width: 30vw;
+    height: 45vw;
+    max-height: 30vw;
+    border-style: solid;
+    border-width: 0.1px;
+    margin: 4vw;
+    /* transform: skew(-1deg, -6deg) scale(0.88); */
+}
 
+
+.rowContainer {
+    height: 100%;
+    display: flex;
+    align-content: stretch;
 }
 
 .etchBox {
     flex: 1;
     border-style: solid;
-    border-width: 1px;
-    width: 30px;
-    height: 30px;
-}
-
-.hovered {
-    background-color: black;
+    border-width: 0.1px;
+    width: 100%;
+    height: auto;
+    background-color: white;
 }

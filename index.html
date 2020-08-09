@@ -1,10 +1,7 @@
 <!-- 
 TO DO:
-    Allow user to choose between black, random color, or their own using color palette
+    Allow user to choose their own using color palette
     Allow user to select size of grid
-    Create a max size for the div (e.g. 5x5 is same size as 10x10)
-    Add the reset button
-
  -->
 
 <!DOCTYPE html>
@@ -15,31 +12,56 @@ TO DO:
     <title>Etch-a-Sketch</title>
 </head>
 <body>
-    <div id="box">
 
-
+    <section id="header">
+    <div id="colorChoice">
+        <button id="customizeGrid">Customize Grid</button>
+        <button id="Reset">Reset</button>
     </div>
+    <div id="customizeGrid"></div>
+    </section>
+
+    <section id="content">
+
+    <div id="box">
+    </div>
+    </section>
+
+    <section id="footer">
+        <button id="Black">Black</button>
+        <button id="Random">Random</button>
+        <button id="customColor">Custom Color</button>
+        <input onchange="colorSelected(this)" type="color">
+    </section>
 
 </body>
 
 <script>
-    const gridsize = 10;
-    const BACKGROUNDCOLOR = 'red';
-    const random = 1;
-    createGrid(gridsize);
+    let gridSize = 10;
+    let etchBoxColor = "black";
+    let random;
+    createGrid(gridSize);
 
+    function colorSelected (element) {
+        etchBoxColor = element.value;
+        reset();
+    }
 
     function createGrid(gridsize) {
         const etchBox = document.querySelector('#box');
         for(let i = 0; i < gridsize; i++) {
-            const column = document.createElement('div');
+            const row = document.createElement('div');
+            row.classList.add('rowContainer');
             for(let j = 0; j < gridsize; j++) {
                 const etchBox = document.createElement('div');
                 etchBox.classList.add('etchBox');
-                column.appendChild(etchBox);
+                row.appendChild(etchBox);
             }
-            etchBox.appendChild(column);
+            etchBox.appendChild(row);
         }
+        // Add event listeners
+        const etchBoxes = document.querySelectorAll('.etchBox');
+        etchBoxes.forEach(etchBox => etchBox.addEventListener("mouseover",changeColor));
     }
 
     function changeColor(e) {
@@ -51,7 +73,7 @@ TO DO:
         }
 
         else {
-            color = BACKGROUNDCOLOR;
+            color = etchBoxColor;
         }
 
         this.style.backgroundColor = color;
@@ -63,10 +85,43 @@ TO DO:
         etchBoxes.forEach(etchBox => etchBox.style.backgroundColor = 'white');
     }
 
-    const etchBoxes = document.querySelectorAll('.etchBox');
-    etchBoxes.forEach(etchBox => etchBox.addEventListener("mouseover",changeColor));
 
+    const customizeGrid = document.querySelector('button#customizeGrid');
+    customizeGrid.addEventListener('click', () => {
+        gridSize = prompt("How many squares do you want on each side?",10);
+        let parent = document.getElementById("box");
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+        createGrid(gridSize);
+    })
 
+    const colorChoices = document.querySelectorAll('button');
+    colorChoices.forEach((button) => {
+        button.addEventListener('click', () => {
+            let colorChoice = button.id;
+            if(colorChoice == "Black") {
+                etchBoxColor = "black";
+                random = 0;
+                reset();
+            }
+            
+            else if (colorChoice == "Random") {
+                random = 1;
+                reset();
+            }
+
+            else if (colorChoice == "chooseColor") {
+                etchBoxColor = colorSelected(element);
+            }
+            
+            else if (colorChoice == "Reset") {
+                random = 0;
+                reset();
+            }
+
+            });
+        });
 
 </script>
 
