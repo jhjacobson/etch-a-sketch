@@ -1,12 +1,24 @@
 const DEFAULT_GRID_SIZE = 20;
-let gridSize = 20;
+let gridSize = DEFAULT_GRID_SIZE;
 let etchBoxColor = "black";
 let random;
 createGrid(gridSize);
 
+const slider = document.getElementById("slider");
+const output = document.getElementById("gridSizeNumber");
+
+slider.oninput = function() { output.textContent = `Grid Size: ${this.value}`; };
+
+slider.onchange = function() {
+    let parent = document.getElementById("box");
+    while (parent.firstChild) { parent.removeChild(parent.firstChild); }
+    createGrid(this.value);
+}
+
 function colorSelected(element) {
     etchBoxColor = element.value;
     reset();
+    random = 0;
 }
 
 function createGrid(gridsize) {
@@ -21,61 +33,29 @@ function createGrid(gridsize) {
         }
         etchBox.appendChild(row);
     }
-    // Add event listeners
     const etchBoxes = document.querySelectorAll('.etchBox');
     etchBoxes.forEach(etchBox => etchBox.addEventListener("mouseover", changeColor));
 }
 
-function changeColor(e) {
-    let color;
-    if (random == 1) {
-        color = `rgb( ${(Math.floor(Math.random() * 256))},
-            ${(Math.floor(Math.random() * 256))},
-            ${(Math.floor(Math.random() * 256))})`;
-    } else {
-        color = etchBoxColor;
-    }
-
-    this.style.backgroundColor = color;
-}
+function changeColor(e) { this.style.backgroundColor = (random === 1) ? getRandomColor() : etchBoxColor; }
+const getRandomColor = () => `rgb( ${rand0to256()},${rand0to256()},${rand0to256()})`;
+const rand0to256 = () => (Math.floor(Math.random() * 256));
 
 function reset() {
     const etchBoxes = document.querySelectorAll('.etchBox');
-    // etchBoxes.forEach(etchBox => etchBox.classList.remove('hovered'));
     etchBoxes.forEach(etchBox => etchBox.style.backgroundColor = 'white');
 }
 
-
-const customizeGrid = document.querySelector('button#customizeGrid');
-customizeGrid.addEventListener('click', () => {
-    gridSize = prompt("How many squares do you want on each side?", DEFAULT_GRID_SIZE);
-    let parent = document.getElementById("box");
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-    if (gridSize == null || gridSize == 0) {
-        gridSize = DEFAULT_GRID_SIZE;
-    }
-    createGrid(gridSize);
-})
-
-const colorChoices = document.querySelectorAll('button');
-colorChoices.forEach((button) => {
+const settings = document.querySelectorAll('button');
+settings.forEach((button) => {
     button.addEventListener('click', () => {
-        let colorChoice = button.id;
-        if (colorChoice == "Black") {
-            etchBoxColor = "black";
-            random = 0;
-            reset();
-        } else if (colorChoice == "Random") {
+        let setting = button.id;
+        if (setting === "Random") {
             random = 1;
             reset();
-        } else if (colorChoice == "chooseColor") {
-            etchBoxColor = colorSelected(element);
-        } else if (colorChoice == "Reset") {
+        } else if (setting === "Reset") {
             random = 0;
             reset();
         }
-
     });
 });

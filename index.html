@@ -18,10 +18,14 @@ TO DO:
     <div id="options">
         <ul>
             <li>Choose Color: <input onchange="colorSelected(this)" type="color"></li>
-            <li><button id="Black">Black</button></li>
             <li><button id="Random">Toggle Rainbow</button></li>
             <li><button id="customizeGrid">Customize Grid</button></li>
             <li><button id="Reset">Reset</button></li>
+            <li>
+                <div id="gridSizeNumber">Grid Size: 20</div>
+                <input type="range" id="slider" min="1" max="100" value="20">
+
+            </li>
         </ul>
     </div>
 
